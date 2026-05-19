@@ -1,0 +1,1009 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0d0d0d;--bg2:#161616;--bg3:#1e1e1e;
+    --gold:#C9A84C;--gold2:#E8C06A;--red:#c0392b;
+    --text:#f0ede8;--text2:#a09d98;--text3:#6b6866;
+    --border:rgba(201,168,76,0.18);--border2:rgba(255,255,255,0.08);
+    --radius:10px;--radius2:16px;
+  }
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;min-height:100vh}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:60px;background:var(--bg);border-bottom:0.5px solid var(--border);position:sticky;top:0;z-index:100}
+  .logo-main{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:var(--gold)}
+  .logo-sub{font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase}
+  .nav-tabs{display:flex;gap:4px}
+  .nav-tab{padding:6px 13px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--text2);transition:all 0.2s;font-family:'DM Sans',sans-serif}
+  .nav-tab:hover{color:var(--text);background:var(--bg3)}
+  .nav-tab.active{background:var(--gold);color:#000}
+  .nav-badge{background:var(--red);color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;margin-left:4px;font-weight:500}
+  .page{display:none;animation:fadeIn 0.3s ease}
+  .page.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+  .hero{position:relative;height:380px;overflow:hidden;display:flex;align-items:flex-end;padding:36px 32px}
+  .hero-bg{position:absolute;inset:0;background:#0d0d0d}
+  .hero-grid{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(201,168,76,0.04) 39px,rgba(201,168,76,0.04) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(201,168,76,0.04) 39px,rgba(201,168,76,0.04) 40px)}
+  .hero-text{position:relative;z-index:1}
+  .hero-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+  .hero-title{font-family:'Bebas Neue',sans-serif;font-size:58px;line-height:0.95;color:var(--text);margin-bottom:14px}
+  .hero-title em{color:var(--gold);font-style:normal}
+  .hero-meta{display:flex;gap:20px;margin-bottom:20px;flex-wrap:wrap}
+  .hero-meta-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)}
+  .hero-meta-item i{color:var(--gold)}
+  .hero-btns{display:flex;gap:10px}
+  .btn-primary{background:var(--gold);color:#000;border:none;padding:10px 22px;border-radius:6px;font-weight:500;font-size:13px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+  .btn-primary:hover{background:var(--gold2)}
+  .btn-ghost{background:transparent;color:var(--text);border:0.5px solid rgba(255,255,255,0.2);padding:10px 22px;border-radius:6px;font-weight:400;font-size:13px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .hero-stats{position:absolute;right:32px;bottom:36px;display:flex;gap:28px;z-index:1}
+  .hstat-num{font-family:'Bebas Neue',sans-serif;font-size:34px;color:var(--gold)}
+  .hstat-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px}
+
+  .section{padding:36px 32px}
+  .section-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;margin-bottom:4px}
+  .section-sub{font-size:13px;color:var(--text2);margin-bottom:24px}
+  .divider{height:0.5px;background:var(--border2);margin:0 32px}
+
+  .hours-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:0}
+  .hours-card{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius2);padding:20px 22px}
+  .hours-day{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:10px}
+  .hours-time{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--text)}
+  .hours-range{font-size:12px;color:var(--text3);margin-top:4px}
+
+  .pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+  .price-card{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius2);padding:22px 18px;cursor:pointer;transition:all 0.25s;position:relative}
+  .price-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+  .price-card.selected{border-color:var(--gold);background:var(--bg3)}
+  .price-card.best::before{content:'Best Value';position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--gold);color:#000;font-size:9px;font-weight:500;padding:3px 10px;border-radius:0 0 6px 6px;letter-spacing:1px;white-space:nowrap}
+  .price-card.coming{position:relative;overflow:hidden}
+  .coming-overlay{position:absolute;inset:0;background:rgba(13,13,13,0.75);border-radius:var(--radius2);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;cursor:default}
+  .price-period{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--text3);margin-bottom:10px}
+  .price-amount{font-family:'Bebas Neue',sans-serif;font-size:38px;color:var(--text);line-height:1}
+  .price-currency{font-size:16px;color:var(--gold);font-family:'DM Sans',sans-serif;font-weight:300}
+  .price-note{font-size:11px;color:var(--text3);margin-top:6px;line-height:1.4}
+  .price-features{margin-top:14px;list-style:none}
+  .price-features li{font-size:11px;color:var(--text2);padding:3px 0;display:flex;align-items:center;gap:5px}
+  .price-features li::before{content:'';width:4px;height:4px;background:var(--gold);border-radius:50%;flex-shrink:0}
+
+  .gender-select-box{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius2);padding:20px 22px;margin-bottom:20px;display:none}
+  .gender-select-box.visible{display:block}
+  .gender-opts{display:flex;gap:12px;margin-top:10px}
+  .gender-opt{flex:1;padding:14px;border-radius:var(--radius);border:0.5px solid var(--border2);background:var(--bg3);cursor:pointer;text-align:center;transition:all 0.2s}
+  .gender-opt:hover{border-color:var(--gold)}
+  .gender-opt.chosen{border-color:var(--gold);background:rgba(201,168,76,0.08)}
+  .gender-opt-label{font-size:13px;font-weight:500;margin-bottom:4px}
+  .gender-opt-price{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--gold)}
+  .gender-opt-unit{font-size:11px;color:var(--text3)}
+
+  .payment-box{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius2);padding:24px;max-width:500px}
+  .payment-methods{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+  .pay-method{padding:7px 14px;border-radius:6px;border:0.5px solid var(--border2);background:var(--bg3);color:var(--text2);font-size:12px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+  .pay-method.active{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.08)}
+  .form-label{font-size:11px;color:var(--text3);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:0.5px}
+  .form-input{width:100%;background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius);padding:9px 13px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;margin-bottom:14px;outline:none;transition:border 0.2s}
+  .form-input:focus{border-color:var(--gold)}
+  .till-box{background:rgba(201,168,76,0.06);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:14px}
+  .till-num{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--gold);letter-spacing:2px}
+  .till-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+  .amount-badge{display:inline-block;background:rgba(201,168,76,0.12);border:0.5px solid var(--border);color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:18px;padding:4px 12px;border-radius:6px;margin-bottom:14px}
+
+  .trainer-filter{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+  .filter-btn{padding:6px 16px;border-radius:20px;font-size:12px;border:0.5px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+  .filter-btn.active{background:var(--gold);color:#000;border-color:var(--gold)}
+  .trainers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .trainer-card{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius2);overflow:hidden;transition:all 0.25s}
+  .trainer-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+  .trainer-img{width:100%;height:110px;background:var(--bg3);display:flex;align-items:center;justify-content:center}
+  .trainer-body{padding:14px}
+  .trainer-name{font-weight:500;font-size:14px;margin-bottom:2px}
+  .trainer-spec{font-size:11px;color:var(--gold)}
+  .trainer-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:2px 7px;border-radius:4px;margin-top:6px}
+  .badge-m{background:rgba(56,139,253,0.12);color:#7ab8f5}
+  .badge-f{background:rgba(220,143,194,0.12);color:#e8a0d0}
+  .trainer-contact{font-size:11px;color:var(--text3);margin-top:8px;line-height:1.7}
+  .trainer-actions{display:flex;gap:6px;margin-top:10px}
+  .btn-sm{padding:5px 10px;border-radius:5px;font-size:11px;cursor:pointer;border:0.5px solid var(--border2);background:transparent;color:var(--text2);font-family:'DM Sans',sans-serif;transition:all 0.2s}
+  .btn-sm:hover{border-color:var(--gold);color:var(--gold)}
+  .btn-sm.primary{background:var(--gold);color:#000;border-color:var(--gold)}
+
+  .cal-box{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius2);padding:22px}
+  .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+  .cal-title{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold)}
+  .cal-btn{background:var(--bg3);border:0.5px solid var(--border2);border-radius:5px;width:28px;height:28px;cursor:pointer;color:var(--text2);display:flex;align-items:center;justify-content:center;font-size:14px;font-family:'DM Sans',sans-serif}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+  .cal-day-label{text-align:center;font-size:9px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text3);padding:3px 0}
+  .cal-day{text-align:center;padding:7px 3px;border-radius:5px;font-size:12px;cursor:pointer;color:var(--text2);transition:all 0.15s}
+  .cal-day:hover{background:var(--bg3);color:var(--text)}
+  .cal-day.today{background:rgba(201,168,76,0.15);color:var(--gold);font-weight:500}
+  .cal-day.session{background:rgba(201,168,76,0.1);border:0.5px solid var(--border);color:var(--gold)}
+  .cal-day.booked{background:rgba(192,57,43,0.15);color:#e87c7c;border:0.5px solid rgba(192,57,43,0.25)}
+  .cal-day.empty{cursor:default}
+  .cal-legend{display:flex;gap:14px;margin-top:14px}
+  .leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)}
+  .leg-dot{width:7px;height:7px;border-radius:50%}
+
+  .chat-layout{display:grid;grid-template-columns:220px 1fr;gap:0;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius2);overflow:hidden;height:420px}
+  .chat-sidebar{border-right:0.5px solid var(--border2);overflow-y:auto}
+  .chat-sidebar-head{padding:14px;border-bottom:0.5px solid var(--border2);font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text3)}
+  .chat-contact{padding:10px 14px;cursor:pointer;transition:background 0.15s;display:flex;align-items:center;gap:9px;border-bottom:0.5px solid var(--border2)}
+  .chat-contact:hover{background:var(--bg3)}
+  .chat-contact.active{background:var(--bg3);border-left:2px solid var(--gold)}
+  .avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+  .av-gold{background:rgba(201,168,76,0.15);color:var(--gold)}
+  .av-blue{background:rgba(56,139,253,0.15);color:#7ab8f5}
+  .av-pink{background:rgba(220,143,194,0.15);color:#e8a0d0}
+  .contact-name{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .contact-preview{font-size:10px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .chat-main{display:flex;flex-direction:column}
+  .chat-header{padding:12px 14px;border-bottom:0.5px solid var(--border2);display:flex;align-items:center;gap:9px}
+  .online-dot{width:7px;height:7px;background:#27ae60;border-radius:50%;margin-left:auto}
+  .chat-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+  .msg{max-width:72%;display:flex;flex-direction:column;gap:2px}
+  .msg.sent{align-self:flex-end;align-items:flex-end}
+  .msg.recv{align-self:flex-start;align-items:flex-start}
+  .msg-bubble{padding:8px 12px;border-radius:10px;font-size:12px;line-height:1.5}
+  .msg.recv .msg-bubble{background:var(--bg3);border:0.5px solid var(--border2);color:var(--text);border-radius:10px 10px 10px 2px}
+  .msg.sent .msg-bubble{background:rgba(201,168,76,0.15);border:0.5px solid var(--border);color:var(--text);border-radius:10px 10px 2px 10px}
+  .msg-time{font-size:10px;color:var(--text3)}
+  .chat-input-row{padding:10px 14px;border-top:0.5px solid var(--border2);display:flex;gap:8px;align-items:center}
+  .chat-input{flex:1;background:var(--bg3);border:0.5px solid var(--border2);border-radius:18px;padding:8px 14px;color:var(--text);font-size:12px;font-family:'DM Sans',sans-serif;outline:none}
+  .chat-input:focus{border-color:var(--gold)}
+  .send-btn{background:var(--gold);color:#000;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+  .dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+  .metric-card{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);padding:18px 14px}
+  .metric-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .metric-value{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--text)}
+  .metric-delta{font-size:10px;margin-top:3px}
+  .delta-up{color:#27ae60}
+  .dash-panels{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
+  .panel{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius2);padding:18px}
+  .panel-title{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:14px}
+  .bar-chart{display:flex;align-items:flex-end;gap:6px;height:90px;margin-bottom:6px}
+  .bar{flex:1;border-radius:3px 3px 0 0;background:rgba(201,168,76,0.18);cursor:pointer;transition:background 0.2s}
+  .bar:hover{background:rgba(201,168,76,0.35)}
+  .bar.highlight{background:var(--gold)}
+  .bar-label{text-align:center;font-size:9px;color:var(--text3);margin-top:3px}
+  .act-item{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:0.5px solid var(--border2)}
+  .act-icon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+  .act-text{flex:1;font-size:12px}
+  .act-time{font-size:10px;color:var(--text3)}
+  .dss-box{background:rgba(201,168,76,0.04);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px;margin-top:14px}
+  .dss-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:7px}
+  .dss-item{display:flex;align-items:flex-start;gap:7px;font-size:11px;color:var(--text2);padding:3px 0}
+  .dss-item::before{content:'→';color:var(--gold);flex-shrink:0}
+  .pending-item{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .pending-actions{margin-left:auto;display:flex;gap:6px}
+  .btn-approve{background:rgba(39,174,96,0.12);color:#27ae60;border:0.5px solid rgba(39,174,96,0.3);padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
+  .btn-reject{background:rgba(192,57,43,0.1);color:#e87c7c;border:0.5px solid rgba(192,57,43,0.25);padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
+  .app-form{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius2);padding:24px}
+  .form-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+</style>
+
+<h2 class="sr-only">Rex Sports Gym platform — Juja Gate C — member, trainer, and owner management</h2>
+
+<nav>
+  <div>
+    <div class="logo-main">Rex Sports Gym</div>
+    <div class="logo-sub">Where limits end and legends begin</div>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('home')">Home</button>
+    <button class="nav-tab" onclick="showPage('client')">Join</button>
+    <button class="nav-tab" onclick="showPage('progress')">My Progress</button>
+    <button class="nav-tab" onclick="showPage('trainers')">Trainers</button>
+    <button class="nav-tab" onclick="showPage('employee')">Staff</button>
+    <button class="nav-tab" onclick="showPage('owner')">Owner <span class="nav-badge">3</span></button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-text">
+      <div class="hero-eyebrow">Juja's Premier Training Facility</div>
+      <div class="hero-title">REX SPORTS<br><em>GYM</em></div>
+      <div class="hero-meta">
+        <div class="hero-meta-item"><i class="ti ti-map-pin" style="font-size:13px" aria-hidden="true"></i> Juja, Gate C · Between Pearl &amp; Jewel Court</div>
+        <div class="hero-meta-item"><i class="ti ti-clock" style="font-size:13px" aria-hidden="true"></i> Mon–Fri: 6:00 AM – 10:00 PM</div>
+        <div class="hero-meta-item"><i class="ti ti-clock" style="font-size:13px" aria-hidden="true"></i> Sat–Sun: 8:00 AM – 9:00 PM</div>
+      </div>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('client')">Join Now — From KSh 50/day (Members)</button>
+        <button class="btn-ghost" onclick="showPage('trainers')">Our Trainers</button>
+      </div>
+      <div style="margin-top:14px;display:flex;gap:18px;flex-wrap:wrap">
+        <div class="hero-meta-item"><i class="ti ti-phone" style="font-size:13px" aria-hidden="true"></i> <a href="tel:+254798522934" style="color:var(--text2);text-decoration:none">+254 798 522 934</a></div>
+        <div class="hero-meta-item"><i class="ti ti-phone" style="font-size:13px" aria-hidden="true"></i> <a href="tel:+254724462757" style="color:var(--text2);text-decoration:none">+254 724 462 757</a></div>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-num">340+</div><div class="hstat-label">Members</div></div>
+      <div class="hstat"><div class="hstat-num">18</div><div class="hstat-label">Trainers</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Opening Hours</div>
+    <div class="section-sub">Rex Sports Gym · Juja, Gate C — Between Pearl &amp; Jewel Court</div>
+    <div class="hours-grid">
+      <div class="hours-card">
+        <div class="hours-day"><i class="ti ti-sun" style="font-size:12px;margin-right:5px" aria-hidden="true"></i>Weekdays</div>
+        <div class="hours-time">6AM – 10PM</div>
+        <div class="hours-range">Monday through Friday · 16 hours</div>
+      </div>
+      <div class="hours-card">
+        <div class="hours-day"><i class="ti ti-beach" style="font-size:12px;margin-right:5px" aria-hidden="true"></i>Weekends</div>
+        <div class="hours-time">8AM – 9PM</div>
+        <div class="hours-range">Saturday & Sunday · 13 hours</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-title">What We Offer</div>
+    <div class="section-sub">Everything under one roof at Juja Gate C</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+      <div style="background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius2);padding:22px">
+        <i class="ti ti-barbell" style="font-size:26px;color:var(--gold);margin-bottom:10px" aria-hidden="true"></i>
+        <div style="font-weight:500;margin-bottom:5px;font-size:14px">Strength Training</div>
+        <div style="font-size:12px;color:var(--text2)">Free weights, machines, cables — serious equipment for serious results.</div>
+      </div>
+      <div style="background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius2);padding:22px">
+        <i class="ti ti-run" style="font-size:26px;color:var(--gold);margin-bottom:10px" aria-hidden="true"></i>
+        <div style="font-weight:500;margin-bottom:5px;font-size:14px">Cardio Zone</div>
+        <div style="font-size:12px;color:var(--text2)">Treadmills, bikes, rowers. Your pace, your goals.</div>
+      </div>
+      <div style="background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius2);padding:22px">
+        <i class="ti ti-users" style="font-size:26px;color:var(--gold);margin-bottom:10px" aria-hidden="true"></i>
+        <div style="font-weight:500;margin-bottom:5px;font-size:14px">Personal Training</div>
+        <div style="font-size:12px;color:var(--text2)">Male and female certified trainers. Book and chat directly on the platform.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <div class="section-title">The Gym</div>
+    <div class="section-sub">A glimpse of what awaits you at Gate C, Juja</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+      <div style="height:180px;border-radius:var(--radius2);overflow:hidden;border:0.5px solid var(--border2);position:relative">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80" alt="Gym weight training floor" style="width:100%;height:100%;object-fit:cover;display:block">
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:10px 12px;background:linear-gradient(transparent,rgba(0,0,0,0.75));font-size:11px;color:#fff;letter-spacing:0.5px">Weight Floor</div>
+      </div>
+      <div style="height:180px;border-radius:var(--radius2);overflow:hidden;border:0.5px solid var(--border2);position:relative">
+        <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600&q=80" alt="Gym cardio zone" style="width:100%;height:100%;object-fit:cover;display:block">
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:10px 12px;background:linear-gradient(transparent,rgba(0,0,0,0.75));font-size:11px;color:#fff;letter-spacing:0.5px">Cardio Zone</div>
+      </div>
+      <div style="height:180px;border-radius:var(--radius2);overflow:hidden;border:0.5px solid var(--border2);position:relative">
+        <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=600&q=80" alt="Gym training area" style="width:100%;height:100%;object-fit:cover;display:block">
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:10px 12px;background:linear-gradient(transparent,rgba(0,0,0,0.75));font-size:11px;color:#fff;letter-spacing:0.5px">Training Area</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CLIENT / JOIN -->
+<div class="page" id="page-client">
+  <div class="section">
+    <div class="section-title">Join Rex Sports Gym</div>
+    <div class="section-sub">Choose your plan · Juja, Gate C — Between Pearl &amp; Jewel Court</div>
+
+    <div style="background:rgba(201,168,76,0.07);border:0.5px solid var(--border);border-radius:var(--radius2);padding:16px 20px;margin-bottom:22px;display:flex;align-items:center;gap:14px">
+      <i class="ti ti-id-badge" style="font-size:26px;color:var(--gold);flex-shrink:0" aria-hidden="true"></i>
+      <div>
+        <div style="font-size:13px;font-weight:500;color:var(--gold);margin-bottom:3px">Membership Registration — KSh 300 (One-time)</div>
+        <div style="font-size:11px;color:var(--text2)">Pay this once to become a registered member. Unlocks the member daily rate of KSh 50 for both genders, plus all member benefits below.</div>
+      </div>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="price-card" id="plan-daily" onclick="selectPlan('daily')">
+        <div class="price-period">Daily</div>
+        <div class="price-amount"><span class="price-currency">KSh </span><span id="daily-amt">50</span></div>
+        <div class="price-note" style="color:var(--gold);font-size:10px">Members (both genders) · KSh 50</div>
+        <div class="price-note" style="margin-top:2px">Non-members: Men KSh 60 · Ladies KSh 70</div>
+        <ul class="price-features">
+          <li>Full gym access</li>
+          <li>Locker room</li>
+          <li>Platform access</li>
+        </ul>
+      </div>
+      <div class="price-card" id="plan-weekly" onclick="selectPlan('weekly')">
+        <div class="price-period">Weekly</div>
+        <div class="price-amount"><span class="price-currency">KSh </span>400</div>
+        <div class="price-note">Both genders · same rate</div>
+        <ul class="price-features">
+          <li>Full gym access</li>
+          <li>Trainer messaging</li>
+          <li>Session calendar</li>
+        </ul>
+      </div>
+      <div class="price-card best" id="plan-monthly" onclick="selectPlan('monthly')">
+        <div class="price-period">Monthly</div>
+        <div class="price-amount"><span class="price-currency">KSh </span>1,500</div>
+        <div class="price-note">Both genders · same rate</div>
+        <ul class="price-features">
+          <li>All above +</li>
+          <li>1 free PT session</li>
+          <li>Progress tracking</li>
+        </ul>
+      </div>
+      <div class="price-card coming" id="plan-annual">
+        <div class="price-period">Annual</div>
+        <div class="price-amount"><span class="price-currency">KSh </span>—</div>
+        <div class="price-note">Rate being finalized</div>
+        <ul class="price-features">
+          <li>Best long-term value</li>
+          <li>All monthly perks</li>
+          <li>PT sessions included</li>
+        </ul>
+        <div class="coming-overlay">Coming Soon</div>
+      </div>
+    </div>
+
+    <div class="gender-select-box" id="gender-box">
+      <div style="font-size:13px;font-weight:500;color:var(--gold)">Daily rate — select membership status</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:3px">Members pay KSh 50 (both genders) · Non-members differ by gender</div>
+      <div class="gender-opts" style="flex-direction:column;gap:8px">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-top:6px">Registered Member (KSh 300 reg. fee paid)</div>
+        <div class="gender-opt" onclick="chooseGender('member',this)">
+          <div class="gender-opt-label">Member — Any Gender</div>
+          <div class="gender-opt-price">50</div>
+          <div class="gender-opt-unit">KSh per day</div>
+        </div>
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-top:4px">Non-Member (Walk-in)</div>
+        <div style="display:flex;gap:12px">
+          <div class="gender-opt" style="flex:1" onclick="chooseGender('male',this)">
+            <div class="gender-opt-label">Male</div>
+            <div class="gender-opt-price">60</div>
+            <div class="gender-opt-unit">KSh per day</div>
+          </div>
+          <div class="gender-opt" style="flex:1" onclick="chooseGender('female',this)">
+            <div class="gender-opt-label">Female</div>
+            <div class="gender-opt-price">70</div>
+            <div class="gender-opt-unit">KSh per day</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size:13px;color:var(--text2);margin-bottom:8px" id="plan-summary">Select a plan above to continue</div>
+    <div id="amount-display" style="margin-bottom:20px"></div>
+
+    <div class="payment-box">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:12px">Payment Method</div>
+      <div class="payment-methods">
+        <div class="pay-method active" onclick="selectPay(this,'mpesa')"><i class="ti ti-device-mobile" aria-hidden="true"></i> M-Pesa</div>
+        <div class="pay-method" onclick="selectPay(this,'airtel')"><i class="ti ti-device-mobile-message" aria-hidden="true"></i> Airtel Money</div>
+        <div class="pay-method" onclick="selectPay(this,'visa')"><i class="ti ti-credit-card" aria-hidden="true"></i> Visa / Card</div>
+      </div>
+      <div id="pay-mpesa">
+        <label class="form-label">Your M-Pesa number</label>
+        <input class="form-input" type="tel" placeholder="07XX XXX XXX">
+        <div class="till-box">
+          <div class="till-label">Pay to Till Number</div>
+          <div class="till-num">— — — —</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:3px">Business: Rex Sports Gym · Gate C, Juja</div>
+        </div>
+        <label class="form-label">M-Pesa confirmation code</label>
+        <input class="form-input" type="text" placeholder="e.g. QHG7XXXXXXX">
+        <button class="btn-primary" style="width:100%">Confirm Payment & Activate Membership</button>
+      </div>
+      <div id="pay-airtel" style="display:none">
+        <div class="till-box">
+          <div class="till-label">Airtel Money — Pay to Till</div>
+          <div class="till-num">— — — —</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:3px">Rex Sports Gym · Gate C, Juja</div>
+        </div>
+        <label class="form-label">Airtel confirmation code</label>
+        <input class="form-input" type="text" placeholder="Your transaction code">
+        <button class="btn-primary" style="width:100%">Confirm Payment & Activate Membership</button>
+      </div>
+      <div id="pay-visa" style="display:none">
+        <label class="form-label">Card number</label>
+        <input class="form-input" type="text" placeholder="1234 5678 9012 3456">
+        <div class="form-row2">
+          <div><label class="form-label">Expiry</label><input class="form-input" type="text" placeholder="MM/YY"></div>
+          <div><label class="form-label">CVV</label><input class="form-input" type="text" placeholder="123"></div>
+        </div>
+        <button class="btn-primary" style="width:100%">Pay & Activate Membership</button>
+      </div>
+    </div>
+
+    <div style="margin-top:36px">
+      <div class="section-title" style="font-size:22px">Session Calendar</div>
+      <div class="section-sub">Tap any day to plan your gym visit</div>
+      <div class="cal-box">
+        <div class="cal-header">
+          <div class="cal-title" id="cal-month">May 2026</div>
+          <div style="display:flex;gap:6px">
+            <button class="cal-btn" onclick="changeMonth(-1)">‹</button>
+            <button class="cal-btn" onclick="changeMonth(1)">›</button>
+          </div>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="cal-legend">
+          <div class="leg-item"><div class="leg-dot" style="background:var(--gold)"></div>Today</div>
+          <div class="leg-item"><div class="leg-dot" style="background:rgba(201,168,76,0.5)"></div>Planned session</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#e87c7c"></div>Trainer booked</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:36px">
+      <div class="section-title" style="font-size:22px">Messages</div>
+      <div class="section-sub">Chat with your trainer directly on the platform</div>
+      <div class="chat-layout">
+        <div class="chat-sidebar">
+          <div class="chat-sidebar-head">Conversations</div>
+          <div id="chat-contacts"></div>
+        </div>
+        <div class="chat-main">
+          <div class="chat-header">
+            <div class="avatar av-blue" id="chat-av">KO</div>
+            <div style="margin-left:3px">
+              <div style="font-size:13px;font-weight:500" id="chat-name">Kevin Ochieng</div>
+              <div style="font-size:10px;color:var(--text3)" id="chat-spec">Strength & Powerlifting</div>
+            </div>
+            <div class="online-dot" title="Online"></div>
+          </div>
+          <div class="chat-messages" id="chat-messages">
+            <div class="msg recv"><div class="msg-bubble">Karibu Rex Sports Gym! Ready to help you smash your goals. When do you want to start?</div><div class="msg-time">10:03 AM</div></div>
+            <div class="msg sent"><div class="msg-bubble">Hey! I'd like to start Monday morning — is 6 AM available?</div><div class="msg-time">10:07 AM</div></div>
+            <div class="msg recv"><div class="msg-bubble">Monday 6 AM is perfect. Come to Gate C and ask for me. First session we do a full assessment.</div><div class="msg-time">10:09 AM</div></div>
+          </div>
+          <div class="chat-input-row">
+            <input class="chat-input" id="chat-input" type="text" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendMsg()">
+            <button class="send-btn" onclick="sendMsg()" aria-label="Send"><i class="ti ti-send" style="font-size:14px" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS TRACKER -->
+<div class="page" id="page-progress">
+  <div class="section">
+    <div class="section-title">My Progress</div>
+    <div class="section-sub">Track your fitness journey at Rex Sports Gym</div>
+
+    <!-- Log new entry -->
+    <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius2);padding:22px;margin-bottom:22px">
+      <div style="font-size:13px;font-weight:500;color:var(--gold);margin-bottom:14px"><i class="ti ti-plus" style="font-size:13px" aria-hidden="true"></i> Log Today's Stats</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">
+        <div>
+          <label class="form-label">Weight (kg)</label>
+          <input class="form-input" id="log-weight" type="number" placeholder="e.g. 74" style="margin-bottom:0">
+        </div>
+        <div>
+          <label class="form-label">Body Fat % (optional)</label>
+          <input class="form-input" id="log-fat" type="number" placeholder="e.g. 18" style="margin-bottom:0">
+        </div>
+        <div>
+          <label class="form-label">Session Duration (min)</label>
+          <input class="form-input" id="log-duration" type="number" placeholder="e.g. 60" style="margin-bottom:0">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">
+        <div>
+          <label class="form-label">Bench Press Max (kg)</label>
+          <input class="form-input" id="log-bench" type="number" placeholder="e.g. 80" style="margin-bottom:0">
+        </div>
+        <div>
+          <label class="form-label">Squat Max (kg)</label>
+          <input class="form-input" id="log-squat" type="number" placeholder="e.g. 100" style="margin-bottom:0">
+        </div>
+        <div>
+          <label class="form-label">Cardio (km today)</label>
+          <input class="form-input" id="log-cardio" type="number" placeholder="e.g. 3.5" style="margin-bottom:0">
+        </div>
+      </div>
+      <div style="margin-bottom:14px">
+        <label class="form-label">Notes</label>
+        <input class="form-input" id="log-notes" type="text" placeholder="e.g. Felt strong today, increased bench by 5kg" style="margin-bottom:0">
+      </div>
+      <button class="btn-primary" onclick="logProgress()"><i class="ti ti-device-floppy" style="font-size:13px" aria-hidden="true"></i> Save Entry</button>
+      <span id="log-confirm" style="font-size:12px;color:#27ae60;margin-left:12px;display:none">✓ Saved!</span>
+    </div>
+
+    <!-- Summary stats -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px" id="progress-summary">
+      <div class="metric-card">
+        <div class="metric-label">Sessions Logged</div>
+        <div class="metric-value" id="stat-sessions">0</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Weight Change</div>
+        <div class="metric-value" id="stat-weight-change" style="font-size:20px">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Best Bench (kg)</div>
+        <div class="metric-value" id="stat-bench">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Total Cardio (km)</div>
+        <div class="metric-value" id="stat-cardio">0</div>
+      </div>
+    </div>
+
+    <!-- Weight chart -->
+    <div style="background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius2);padding:20px;margin-bottom:18px">
+      <div class="panel-title">Weight Over Time (kg)</div>
+      <div style="position:relative;height:120px;margin-bottom:8px" id="weight-chart-wrap">
+        <svg id="weight-chart" width="100%" height="120" style="overflow:visible"></svg>
+        <div id="weight-chart-empty" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text3)">Log at least 2 entries to see your weight trend</div>
+      </div>
+    </div>
+
+    <!-- Strength chart -->
+    <div style="background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius2);padding:20px;margin-bottom:18px">
+      <div class="panel-title">Strength Progress — Bench &amp; Squat Max (kg)</div>
+      <div style="position:relative;height:120px" id="strength-chart-wrap">
+        <svg id="strength-chart" width="100%" height="120" style="overflow:visible"></svg>
+        <div id="strength-chart-empty" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text3)">Log bench or squat data to see strength progress</div>
+      </div>
+      <div style="display:flex;gap:16px;margin-top:10px">
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:12px;height:3px;background:var(--gold);border-radius:2px"></div>Bench</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)"><div style="width:12px;height:3px;background:#7ab8f5;border-radius:2px"></div>Squat</div>
+      </div>
+    </div>
+
+    <!-- Log history -->
+    <div style="background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius2);padding:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div class="panel-title" style="margin-bottom:0">Entry History</div>
+        <button class="btn-sm" onclick="clearProgress()" style="font-size:10px">Clear All</button>
+      </div>
+      <div id="progress-log" style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-size:12px;color:var(--text3);text-align:center;padding:20px 0">No entries yet — log your first session above.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRAINERS -->
+<div class="page" id="page-trainers">
+  <div class="section">
+    <div class="section-title">Rex Sports Trainers</div>
+    <div class="section-sub">Certified professionals at Gate C, Juja — filter by gender preference</div>
+    <div class="trainer-filter">
+      <button class="filter-btn active" onclick="filterTrainers('all',this)">All Trainers</button>
+      <button class="filter-btn" onclick="filterTrainers('male',this)">Male</button>
+      <button class="filter-btn" onclick="filterTrainers('female',this)">Female</button>
+      <button class="filter-btn" onclick="showPage('employee')">Apply as Trainer</button>
+    </div>
+    <div class="trainers-grid" id="trainers-grid"></div>
+  </div>
+</div>
+
+<!-- EMPLOYEE / STAFF -->
+<div class="page" id="page-employee">
+  <div class="section">
+    <div class="section-title">Staff & Trainer Portal</div>
+    <div class="section-sub">Rex Sports Gym · Gate C, Juja</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:14px;color:var(--gold)">Trainer Application</div>
+        <div class="app-form">
+          <div class="form-row2">
+            <div><label class="form-label">First name</label><input class="form-input" placeholder="Jane"></div>
+            <div><label class="form-label">Last name</label><input class="form-input" placeholder="Muthoni"></div>
+          </div>
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" placeholder="jane@email.com">
+          <label class="form-label">Phone (shown to clients)</label>
+          <input class="form-input" type="tel" placeholder="07XX XXX XXX">
+          <label class="form-label">Specialization</label>
+          <input class="form-input" placeholder="e.g. Strength, Yoga, HIIT, Weight Loss">
+          <label class="form-label">Your daily rate (KSh)</label>
+          <input class="form-input" type="number" placeholder="e.g. 2500">
+          <label class="form-label">Years of experience</label>
+          <input class="form-input" type="number" placeholder="e.g. 4">
+          <label class="form-label">Certifications & credentials</label>
+          <textarea class="form-input" rows="3" style="resize:none" placeholder="List your qualifications and training credentials..."></textarea>
+          <label class="form-label">Gender</label>
+          <select class="form-input"><option>Select gender</option><option>Male</option><option>Female</option></select>
+          <button class="btn-primary" style="width:100%;margin-top:4px">Submit Application</button>
+          <div style="font-size:10px;color:var(--text3);margin-top:8px;text-align:center">Reviewed and approved by the owner before your profile goes live</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:500;margin-bottom:14px;color:var(--gold)">Sample Trainer Profile</div>
+        <div class="app-form" style="margin-bottom:16px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+            <div class="avatar av-gold" style="width:44px;height:44px;font-size:14px">JM</div>
+            <div>
+              <div style="font-weight:500;font-size:14px">Jane Muthoni</div>
+              <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(39,174,96,0.12);color:#27ae60;border:0.5px solid rgba(39,174,96,0.25);padding:3px 9px;border-radius:4px;font-size:10px;margin-top:4px"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i> Approved by owner</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:5px 16px;font-size:12px">
+            <div style="color:var(--text3)">Specialization</div><div>HIIT, Strength</div>
+            <div style="color:var(--text3)">Phone</div><div>0712 345 678</div>
+            <div style="color:var(--text3)">Email</div><div style="font-size:11px">jane@rexsports.ke</div>
+            <div style="color:var(--text3)">Sessions today</div><div>3</div>
+            <div style="color:var(--text3)">This month</div><div>42 sessions</div>
+          </div>
+        </div>
+        <div style="font-size:12px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);padding:14px;color:var(--text2)">
+          <div style="color:var(--text3);font-size:10px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px">Note on employees</div>
+          General staff — reception, cleaners, security — are registered by the owner from the Owner dashboard. They do not apply here. Salaries are managed internally.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OWNER DASHBOARD -->
+<div class="page" id="page-owner">
+  <div class="section">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div>
+        <div class="section-title">Owner Dashboard</div>
+        <div class="section-sub">Rex Sports Gym · TPS · MIS · DSS · Gate C, Juja · May 17, 2026</div>
+      </div>
+      <select class="form-input" style="width:auto;margin-bottom:0;font-size:12px"><option>Today</option><option>This week</option><option>This month</option></select>
+    </div>
+    <div class="dash-grid">
+      <div class="metric-card">
+        <div class="metric-label">Revenue today (TPS)</div>
+        <div class="metric-value" style="color:var(--gold)">KSh 9,240</div>
+        <div class="metric-delta delta-up"><i class="ti ti-trending-up" style="font-size:11px" aria-hidden="true"></i> ↑ 14% vs yesterday</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Active members</div>
+        <div class="metric-value">347</div>
+        <div class="metric-delta delta-up">↑ 12 this week</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Check-ins today</div>
+        <div class="metric-value">84</div>
+        <div class="metric-delta delta-up">↑ 6 vs yesterday</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Pending approvals</div>
+        <div class="metric-value" style="color:var(--gold)">3</div>
+        <div class="metric-delta" style="color:var(--text3)">Trainer applications</div>
+      </div>
+    </div>
+    <div class="dash-panels">
+      <div class="panel">
+        <div class="panel-title">Weekly check-ins (TPS → MIS)</div>
+        <div class="bar-chart" id="bar-chart"></div>
+        <div style="display:flex" id="bar-labels"></div>
+        <div class="dss-box">
+          <div class="dss-label"><i class="ti ti-brain" style="font-size:12px" aria-hidden="true"></i> DSS Recommendations</div>
+          <div class="dss-item">Peak hours at Rex are 6–8 AM and 5–7 PM — consider a second trainer at 6 AM on weekdays.</div>
+          <div class="dss-item">Monthly (KSh 1,500) converts 3× better than daily. Promote it at the Gate C desk.</div>
+          <div class="dss-item">Female trainer slots fill 40% faster than male slots — recruit 1–2 more female trainers.</div>
+          <div class="dss-item">Weekly plan (KSh 400) now live — monitor uptake this week and compare vs daily repeat buyers.</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Live activity (TPS feed)</div>
+        <div class="act-item">
+          <div class="act-icon" style="background:rgba(39,174,96,0.1)"><i class="ti ti-cash" style="font-size:14px;color:#27ae60" aria-hidden="true"></i></div>
+          <div class="act-text">Monthly membership · KSh 1,500 confirmed</div>
+          <div class="act-time">2m ago</div>
+        </div>
+        <div class="act-item">
+          <div class="act-icon" style="background:rgba(201,168,76,0.1)"><i class="ti ti-user-plus" style="font-size:14px;color:var(--gold)" aria-hidden="true"></i></div>
+          <div class="act-text">New client — weekly plan · KSh 400</div>
+          <div class="act-time">9m ago</div>
+        </div>
+        <div class="act-item">
+          <div class="act-icon" style="background:rgba(201,168,76,0.1)"><i class="ti ti-cash" style="font-size:14px;color:var(--gold)" aria-hidden="true"></i></div>
+          <div class="act-text">Daily (female) · KSh 70 confirmed</div>
+          <div class="act-time">22m ago</div>
+        </div>
+        <div class="act-item">
+          <div class="act-icon" style="background:rgba(56,139,253,0.1)"><i class="ti ti-id-badge" style="font-size:14px;color:#7ab8f5" aria-hidden="true"></i></div>
+          <div class="act-text">Trainer application — James K. submitted</div>
+          <div class="act-time">34m ago</div>
+        </div>
+        <div class="act-item">
+          <div class="act-icon" style="background:rgba(201,168,76,0.1)"><i class="ti ti-door-enter" style="font-size:14px;color:var(--gold)" aria-hidden="true"></i></div>
+          <div class="act-text">84 check-ins at Gate C today</div>
+          <div class="act-time">ongoing</div>
+        </div>
+        <div style="margin-top:16px">
+          <div class="panel-title">Pending trainer approvals</div>
+          <div class="pending-item">
+            <div class="avatar av-blue" style="width:30px;height:30px;font-size:11px">JK</div>
+            <div><div style="font-size:12px;font-weight:500">James Kariuki</div><div style="font-size:10px;color:var(--text3)">Strength · 5 yrs</div></div>
+            <div class="pending-actions"><button class="btn-approve" onclick="approveTr(this)">Approve</button><button class="btn-reject">Reject</button></div>
+          </div>
+          <div class="pending-item">
+            <div class="avatar av-pink" style="width:30px;height:30px;font-size:11px">AN</div>
+            <div><div style="font-size:12px;font-weight:500">Amina Ndege</div><div style="font-size:10px;color:var(--text3)">Yoga · 3 yrs</div></div>
+            <div class="pending-actions"><button class="btn-approve" onclick="approveTr(this)">Approve</button><button class="btn-reject">Reject</button></div>
+          </div>
+          <div class="pending-item">
+            <div class="avatar av-gold" style="width:30px;height:30px;font-size:11px">DO</div>
+            <div><div style="font-size:12px;font-weight:500">Dennis Oduya</div><div style="font-size:10px;color:var(--text3)">HIIT · 2 yrs</div></div>
+            <div class="pending-actions"><button class="btn-approve" onclick="approveTr(this)">Approve</button><button class="btn-reject">Reject</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PAGES=['home','client','progress','trainers','employee','owner'];
+function showPage(id){
+  PAGES.forEach(p=>document.getElementById('page-'+p).classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach((t,i)=>{
+    if(PAGES[i]===id)t.classList.add('active');else t.classList.remove('active');
+  });
+  document.getElementById('page-'+id).classList.add('active');
+  if(id==='client'){buildCalendar();buildChatContacts();}
+  if(id==='trainers')buildTrainers();
+  if(id==='owner')buildBarChart();
+  if(id==='progress')renderProgress();
+}
+
+function selectPlan(plan){
+  document.querySelectorAll('.price-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('plan-'+plan).classList.add('selected');
+  const gbox=document.getElementById('gender-box');
+  const summary=document.getElementById('plan-summary');
+  const amtDisp=document.getElementById('amount-display');
+  if(plan==='daily'){
+    gbox.classList.add('visible');
+    summary.textContent='Daily plan — choose your gender to see your rate';
+    amtDisp.innerHTML='';
+  } else {
+    gbox.classList.remove('visible');
+    if(plan==='weekly'){summary.textContent='Weekly membership selected';amtDisp.innerHTML='<div class="amount-badge">KSh 400</div>';}
+    if(plan==='monthly'){summary.textContent='Monthly membership selected';amtDisp.innerHTML='<div class="amount-badge">KSh 1,500</div>';}
+  }
+}
+function chooseGender(g,el){
+  document.querySelectorAll('.gender-opt').forEach(o=>o.classList.remove('chosen'));
+  el.classList.add('chosen');
+  let amt,label;
+  if(g==='member'){amt=50;label='Member (any gender)';}
+  else if(g==='male'){amt=60;label='Non-member · Male';}
+  else{amt=70;label='Non-member · Female';}
+  document.getElementById('plan-summary').textContent='Daily · '+label+' — KSh '+amt+' per visit';
+  document.getElementById('amount-display').innerHTML='<div class="amount-badge">KSh '+amt+'</div>';
+}
+function selectPay(el,type){
+  document.querySelectorAll('.pay-method').forEach(m=>m.classList.remove('active'));
+  el.classList.add('active');
+  ['mpesa','airtel','visa'].forEach(t=>document.getElementById('pay-'+t).style.display='none');
+  document.getElementById('pay-'+type).style.display='block';
+}
+
+let calYear=2026,calMonth=4;
+const sessions=[3,7,10,14,17,21,24,28],booked=[5,12,19,26];
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function buildCalendar(){
+  document.getElementById('cal-month').textContent=MONTHS[calMonth]+' '+calYear;
+  const grid=document.getElementById('cal-grid');grid.innerHTML='';
+  ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d=>{const e=document.createElement('div');e.className='cal-day-label';e.textContent=d;grid.appendChild(e);});
+  const first=new Date(calYear,calMonth,1).getDay(),days=new Date(calYear,calMonth+1,0).getDate();
+  const td=new Date();
+  for(let i=0;i<first;i++){const e=document.createElement('div');e.className='cal-day empty';grid.appendChild(e);}
+  for(let d=1;d<=days;d++){
+    const e=document.createElement('div');
+    let cls='cal-day';
+    if(d===td.getDate()&&calMonth===td.getMonth()&&calYear===td.getFullYear())cls+=' today';
+    else if(booked.includes(d))cls+=' booked';
+    else if(sessions.includes(d))cls+=' session';
+    e.className=cls;e.textContent=d;
+    e.onclick=()=>{if(e.classList.contains('session'))e.classList.remove('session');else if(!e.classList.contains('today')&&!e.classList.contains('booked'))e.classList.add('session');};
+    grid.appendChild(e);
+  }
+}
+function changeMonth(dir){calMonth+=dir;if(calMonth>11){calMonth=0;calYear++;}if(calMonth<0){calMonth=11;calYear--;}buildCalendar();}
+
+const TRAINERS=[
+  {name:'Kevin Ochieng',spec:'Strength & Powerlifting',gender:'male',phone:'0712 000 001',email:'kevin@rexsports.ke'},
+  {name:'Amina Ndege',spec:'Yoga & Flexibility',gender:'female',phone:'0712 000 002',email:'amina@rexsports.ke'},
+  {name:'Brian Mwangi',spec:'HIIT & Cardio',gender:'male',phone:'0712 000 003',email:'brian@rexsports.ke'},
+  {name:'Fatuma Hassan',spec:'Weight Loss & Nutrition',gender:'female',phone:'0712 000 004',email:'fatuma@rexsports.ke'},
+  {name:'Dennis Rotich',spec:'Sports Performance',gender:'male',phone:'0712 000 005',email:'dennis@rexsports.ke'},
+  {name:'Grace Wanjiru',spec:'Pilates & Core',gender:'female',phone:'0712 000 006',email:'grace@rexsports.ke'},
+];
+let trainerFilter='all';
+function filterTrainers(f,btn){
+  trainerFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  buildTrainers();
+}
+function buildTrainers(){
+  const grid=document.getElementById('trainers-grid');if(!grid)return;
+  const list=trainerFilter==='all'?TRAINERS:TRAINERS.filter(t=>t.gender===trainerFilter);
+  grid.innerHTML='';
+  list.forEach(t=>{
+    const init=t.name.split(' ').map(n=>n[0]).join('');
+    const bc=t.gender==='male'?'badge-m':'badge-f';
+    const bl=t.gender==='male'?'Male Trainer':'Female Trainer';
+    grid.innerHTML+=`<div class="trainer-card">
+      <div class="trainer-img"><span style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--text3)">${init}</span></div>
+      <div class="trainer-body">
+        <div class="trainer-name">${t.name}</div>
+        <div class="trainer-spec">${t.spec}</div>
+        <span class="trainer-badge ${bc}">${bl}</span>
+        <div class="trainer-contact">
+          <i class="ti ti-phone" style="font-size:11px" aria-hidden="true"></i> ${t.phone}<br>
+          <i class="ti ti-mail" style="font-size:11px" aria-hidden="true"></i> ${t.email}
+        </div>
+        <div class="trainer-actions">
+          <button class="btn-sm primary" onclick="goChat('${t.name}','${t.spec}','${init}','${t.gender==='male'?'av-blue':'av-pink'}')">Message</button>
+          <button class="btn-sm">Book</button>
+        </div>
+      </div>
+    </div>`;
+  });
+}
+
+function buildChatContacts(){
+  const c=document.getElementById('chat-contacts');if(!c)return;c.innerHTML='';
+  TRAINERS.forEach((t,i)=>{
+    const init=t.name.split(' ').map(n=>n[0]).join('');
+    const av=t.gender==='male'?'av-blue':'av-pink';
+    c.innerHTML+=`<div class="chat-contact${i===0?' active':''}" onclick="selectContact(this,'${t.name}','${t.spec}','${init}','${av}')">
+      <div class="avatar ${av}" style="width:34px;height:34px;font-size:11px">${init}</div>
+      <div style="min-width:0"><div class="contact-name">${t.name}</div><div class="contact-preview">${t.spec}</div></div>
+    </div>`;
+  });
+}
+function selectContact(el,name,spec,init,av){
+  document.querySelectorAll('.chat-contact').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('chat-name').textContent=name;
+  document.getElementById('chat-spec').textContent=spec;
+  document.getElementById('chat-av').className='avatar '+av;
+  document.getElementById('chat-av').textContent=init;
+}
+function goChat(name,spec,init,av){
+  showPage('client');
+  setTimeout(()=>{
+    const els=document.querySelectorAll('.chat-contact');
+    els.forEach(e=>{if(e.textContent.includes(name.split(' ')[0])){document.querySelectorAll('.chat-contact').forEach(c=>c.classList.remove('active'));e.classList.add('active');}});
+    document.getElementById('chat-name').textContent=name;
+    document.getElementById('chat-spec').textContent=spec;
+    document.getElementById('chat-av').className='avatar '+av;
+    document.getElementById('chat-av').textContent=init;
+    document.getElementById('chat-messages').scrollIntoView({behavior:'smooth',block:'center'});
+  },250);
+}
+function sendMsg(){
+  const inp=document.getElementById('chat-input');if(!inp||!inp.value.trim())return;
+  const msgs=document.getElementById('chat-messages');
+  const now=new Date(),h=now.getHours(),m=String(now.getMinutes()).padStart(2,'0');
+  msgs.innerHTML+=`<div class="msg sent"><div class="msg-bubble">${inp.value}</div><div class="msg-time">${h}:${m} ${h<12?'AM':'PM'}</div></div>`;
+  inp.value='';msgs.scrollTop=msgs.scrollHeight;
+}
+
+function buildBarChart(){
+  const data=[72,88,65,94,84,101,78],days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],mx=Math.max(...data);
+  const chart=document.getElementById('bar-chart'),labels=document.getElementById('bar-labels');
+  if(!chart)return;chart.innerHTML='';labels.innerHTML='';
+  data.forEach((v,i)=>{
+    const b=document.createElement('div');b.className='bar'+(i===4?' highlight':'');
+    b.style.height=Math.round((v/mx)*100)+'%';b.title=days[i]+': '+v+' check-ins';chart.appendChild(b);
+    const l=document.createElement('div');l.className='bar-label';l.style.flex='1';l.style.textAlign='center';l.textContent=days[i];labels.appendChild(l);
+  });
+}
+function approveTr(btn){
+  btn.textContent='Approved';btn.style.background='rgba(39,174,96,0.2)';btn.style.cursor='default';
+  const rej=btn.closest('.pending-item').querySelector('.btn-reject');if(rej)rej.style.display='none';
+}
+
+// ── PROGRESS TRACKER ──
+let progressLog=[];
+try{progressLog=JSON.parse(localStorage.getItem('rex_progress')||'[]');}catch(e){}
+
+function saveStorage(){try{localStorage.setItem('rex_progress',JSON.stringify(progressLog));}catch(e){}}
+
+function logProgress(){
+  const w=parseFloat(document.getElementById('log-weight').value)||null;
+  const f=parseFloat(document.getElementById('log-fat').value)||null;
+  const d=parseFloat(document.getElementById('log-duration').value)||null;
+  const b=parseFloat(document.getElementById('log-bench').value)||null;
+  const s=parseFloat(document.getElementById('log-squat').value)||null;
+  const c=parseFloat(document.getElementById('log-cardio').value)||null;
+  const n=document.getElementById('log-notes').value.trim()||null;
+  if(!w&&!b&&!s&&!c&&!d){alert('Please fill in at least one field.');return;}
+  const entry={date:new Date().toLocaleDateString('en-KE',{day:'2-digit',month:'short',year:'numeric'}),ts:Date.now(),weight:w,fat:f,duration:d,bench:b,squat:s,cardio:c,notes:n};
+  progressLog.unshift(entry);
+  saveStorage();
+  ['log-weight','log-fat','log-duration','log-bench','log-squat','log-cardio','log-notes'].forEach(id=>{document.getElementById(id).value='';});
+  const cf=document.getElementById('log-confirm');cf.style.display='inline';setTimeout(()=>cf.style.display='none',2000);
+  renderProgress();
+}
+
+function clearProgress(){
+  if(!confirm('Clear all progress entries?'))return;
+  progressLog=[];saveStorage();renderProgress();
+}
+
+function deleteEntry(i){
+  progressLog.splice(i,1);saveStorage();renderProgress();
+}
+
+function renderProgress(){
+  const log=document.getElementById('progress-log');
+  if(!log)return;
+  document.getElementById('stat-sessions').textContent=progressLog.length;
+  const weights=progressLog.filter(e=>e.weight).map(e=>e.weight);
+  if(weights.length>=2){
+    const chg=(weights[0]-weights[weights.length-1]).toFixed(1);
+    const el=document.getElementById('stat-weight-change');
+    el.textContent=(chg>0?'+':'')+chg+' kg';
+    el.style.color=chg<0?'#27ae60':chg>0?'#e87c7c':'var(--text)';
+  } else {document.getElementById('stat-weight-change').textContent='—';}
+  const benches=progressLog.filter(e=>e.bench).map(e=>e.bench);
+  document.getElementById('stat-bench').textContent=benches.length?Math.max(...benches)+'':'—';
+  const cardioTotal=progressLog.reduce((a,e)=>a+(e.cardio||0),0);
+  document.getElementById('stat-cardio').textContent=cardioTotal.toFixed(1);
+  drawLineChart('weight-chart','weight-chart-empty',progressLog.filter(e=>e.weight).map(e=>({label:e.date,val:e.weight})).reverse(),'var(--gold)');
+  const benchData=progressLog.filter(e=>e.bench).map(e=>({label:e.date,val:e.bench})).reverse();
+  const squatData=progressLog.filter(e=>e.squat).map(e=>({label:e.date,val:e.squat})).reverse();
+  drawDualLineChart('strength-chart','strength-chart-empty',benchData,squatData);
+  if(!progressLog.length){log.innerHTML='<div style="font-size:12px;color:var(--text3);text-align:center;padding:20px 0">No entries yet — log your first session above.</div>';return;}
+  log.innerHTML=progressLog.map((e,i)=>`
+    <div style="background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--radius);padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start">
+      <div>
+        <div style="font-size:11px;color:var(--gold);margin-bottom:5px">${e.date}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          ${e.weight?`<span style="font-size:11px;color:var(--text2)">⚖ ${e.weight} kg</span>`:''}
+          ${e.fat?`<span style="font-size:11px;color:var(--text2)">🔥 ${e.fat}% BF</span>`:''}
+          ${e.bench?`<span style="font-size:11px;color:var(--text2)">🏋 Bench ${e.bench} kg</span>`:''}
+          ${e.squat?`<span style="font-size:11px;color:var(--text2)">🦵 Squat ${e.squat} kg</span>`:''}
+          ${e.cardio?`<span style="font-size:11px;color:var(--text2)">🏃 ${e.cardio} km</span>`:''}
+          ${e.duration?`<span style="font-size:11px;color:var(--text2)">⏱ ${e.duration} min</span>`:''}
+        </div>
+        ${e.notes?`<div style="font-size:11px;color:var(--text3);margin-top:5px;font-style:italic">"${e.notes}"</div>`:''}
+      </div>
+      <button onclick="deleteEntry(${i})" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:13px;padding:0" title="Delete">✕</button>
+    </div>
+  `).join('');
+}
+
+function drawLineChart(svgId,emptyId,data,color){
+  const svg=document.getElementById(svgId);const empty=document.getElementById(emptyId);
+  if(!svg)return;svg.innerHTML='';
+  if(data.length<2){if(empty)empty.style.display='flex';return;}
+  if(empty)empty.style.display='none';
+  const W=svg.clientWidth||700,H=120,pad=30;
+  const vals=data.map(d=>d.val);const mn=Math.min(...vals),mx=Math.max(...vals),range=mx-mn||1;
+  const pts=data.map((d,i)=>[pad+i*(W-2*pad)/Math.max(data.length-1,1),H-pad-(d.val-mn)/range*(H-2*pad)]);
+  svg.innerHTML=`<path d="M${pts.map(p=>p.join(',')).join('L')}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  ${pts.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="${color}"/><text x="${p[0]}" y="${H-2}" text-anchor="middle" font-size="9" fill="rgba(160,157,152,0.8)">${data[i].label.slice(0,6)}</text><text x="${p[0]}" y="${p[1]-8}" text-anchor="middle" font-size="9" fill="${color}">${data[i].val}</text>`).join('')}`;
+}
+
+function drawDualLineChart(svgId,emptyId,data1,data2){
+  const svg=document.getElementById(svgId);const empty=document.getElementById(emptyId);
+  if(!svg)return;svg.innerHTML='';
+  const hasData=data1.length>=2||data2.length>=2;
+  if(!hasData){if(empty)empty.style.display='flex';return;}
+  if(empty)empty.style.display='none';
+  const W=svg.clientWidth||700,H=120,pad=30;
+  const allVals=[...data1.map(d=>d.val),...data2.map(d=>d.val)];
+  const mn=Math.min(...allVals),mx=Math.max(...allVals),range=mx-mn||1;
+  const toY=v=>H-pad-(v-mn)/range*(H-2*pad);
+  const toX=(i,len)=>pad+i*(W-2*pad)/Math.max(len-1,1);
+  let out='';
+  if(data1.length>=2){const pts=data1.map((d,i)=>[toX(i,data1.length),toY(d.val)]);out+=`<path d="M${pts.map(p=>p.join(',')).join('L')}" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"/>`;pts.forEach((p,i)=>{out+=`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="var(--gold)"/><text x="${p[0]}" y="${p[1]-7}" text-anchor="middle" font-size="9" fill="var(--gold)">${data1[i].val}</text>`;});}
+  if(data2.length>=2){const pts=data2.map((d,i)=>[toX(i,data2.length),toY(d.val)]);out+=`<path d="M${pts.map(p=>p.join(',')).join('L')}" fill="none" stroke="#7ab8f5" stroke-width="2" stroke-linecap="round"/>`;pts.forEach((p,i)=>{out+=`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="#7ab8f5"/><text x="${p[0]}" y="${p[1]-7}" text-anchor="middle" font-size="9" fill="#7ab8f5">${data2[i].val}</text>`;});}
+  svg.innerHTML=out;
+}
+
+buildCalendar();buildChatContacts();renderProgress();
+</script>
